@@ -14,7 +14,8 @@
         </li>
       <%% } %>
     </ol>
-    Name: <input type='text'>
+    Name: <input type='text'><br><br><br>
+    <button class='add'>Add a quiz</button>
     <div class='error'></div>
   </div>
 </script>
@@ -23,12 +24,36 @@
   <div data-quiz=<%%= data[current].quiz_id %> data-question=<%%= data[current].id %>>
     <h3>Question <%%= current + 1 %></h3>
     <p><%%= data[current].question %></p>
-    <%% for(var i = 0; i < choices.length; i++){ %>
-      <input type='radio' name='answer' value=<%%= choices[i] %>><%%= choices[i] %><br>
+    <%% if(data[current].question_type === 'multiple'){ %>
+      <%% for(var i = 0; i < choices.length; i++){ %>
+        <input type='radio' name='answer' value=<%%= choices[i] %>><%%= choices[i] %><br>
+      <%% } %>
+    <%% } %>
+    <%% if(data[current].question_type === 'boolean'){ %>
+      <input type='radio' name='answer' value='true'>true<br>
+      <input type='radio' name='answer' value='false'>false<br>
+    <%% } %>
+    <%% if(data[current].question_type === 'blank'){ %>
+      <input type='text'><br>
     <%% } %>
     <br>
     <button class='next'>Next</button>
   </div>
+</script>
+
+<script type='text/template' class='new-quiz-template'>
+  <h3>Add a quiz</h3>
+  Quiz name: <input type='text'><br>
+  <button class='create-quiz'>Create!</button>
+</script>
+
+<script type='text/template' class='new-question-template'>
+  <h3>Add a question</h3>
+  <select class='type'>
+    <option value='multiple'>Multiple Choice</option>
+    <option value='boolean'>True/False</option>
+    <option value='blank'>Free Response</option>
+  </select>
 </script>
 
 <script type='text/template' class='score-template'>

@@ -1,7 +1,7 @@
 $(document).ready(function(){
   var $main = $('.main-content');
 
-  var all_quizzes = function(){
+  var allQuizzes = function(){
     $.get('/quizzes', function(data){
       var template = $('.quiz-menu-template').html();
       var uncompiledTemplate = _.template(template);
@@ -37,7 +37,18 @@ $(document).ready(function(){
   });
 
   $main.on('click', '.home', function(){
-    all_quizzes();
+    allQuizzes();
+  });
+
+  $main.on('click', '.add', function(){
+    var title = $('input').val();
+    var $template = $('.new-quiz-template').html();
+    $main.empty().append($template);
+    $.post('/quizzes', {quiz: {title: title}})
+  });
+
+  $main.on('click', '.create-quiz', function(){
+
   });
 
   var displayStatus = function(status){
@@ -93,5 +104,5 @@ $(document).ready(function(){
     $main.empty().append($elem);
   };
 
-  all_quizzes();
+  allQuizzes();
 });

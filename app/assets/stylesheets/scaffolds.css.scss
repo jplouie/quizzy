@@ -35,6 +35,15 @@ div {
   }
 }
 
+.main-content, .status, h2 {
+  width: 200px;
+  margin: auto;
+}
+
+.main-content {
+  margin-top: 100px;
+}
+
 #notice {
   color: green;
 }
