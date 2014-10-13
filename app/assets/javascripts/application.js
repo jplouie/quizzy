@@ -16,3 +16,5 @@
 //= require underscore
 // 
 // Your Quizzy code should go here.
+
+//= require quizzy

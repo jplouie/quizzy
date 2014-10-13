@@ -1,3 +1,39 @@
 <h2>Quizzy Quiz</h2>
 
-<p>Your single page app should go here.</p>
+<div class='main-content' data-score=0></div>
+<div class='status'></div>
+
+<script type='text/template' class='quiz-menu-template'>
+  <div class='menu'>
+    <h3>Quizzes</h3>
+    <ol>
+      <%% for(var i = 0; i < data.length; i++){ %>
+        <li data-quiz=<%%= data[i].id %>>
+          <%%= data[i].title %>
+          <button class='go'>Go</button>
+        </li>
+      <%% } %>
+    </ol>
+    Name: <input type='text'>
+    <div class='error'></div>
+  </div>
+</script>
+
+<script type='text/template' class='question-template'>
+  <div data-quiz=<%%= data[current].quiz_id %> data-question=<%%= data[current].id %>>
+    <h3>Question <%%= current + 1 %></h3>
+    <p><%%= data[current].question %></p>
+    <%% for(var i = 0; i < choices.length; i++){ %>
+      <input type='radio' name='answer' value=<%%= choices[i] %>><%%= choices[i] %><br>
+    <%% } %>
+    <br>
+    <button class='next'>Next</button>
+  </div>
+</script>
+
+<script type='text/template' class='score-template'>
+  <div class='final'>
+    <h3><%%= name %>, you scored: <%%= score %> / <%%= total %> (<%%= (score / total * 100).toFixed(0) %>%)</h3>
+    <button class='home'>All Quizzes</button>
+  </div>
+</script>
