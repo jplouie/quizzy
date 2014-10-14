@@ -41,14 +41,15 @@ $(document).ready(function(){
   });
 
   $main.on('click', '.add', function(){
-    var title = $('input').val();
     var $template = $('.new-quiz-template').html();
     $main.empty().append($template);
-    $.post('/quizzes', {quiz: {title: title}})
   });
 
   $main.on('click', '.create-quiz', function(){
-
+    var title = $('input').val();
+    var $template = $('.new-question-template').html();
+    $main.empty().append($template);
+    $.post('/quizzes', {quiz: {title: title}});
   });
 
   var displayStatus = function(status){

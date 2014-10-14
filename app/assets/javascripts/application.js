@@ -17,4 +17,7 @@
 // 
 // Your Quizzy code should go here.
 
-//= require quizzy
+// require quizzy
+//= require_tree models
+//= require_tree views
+//= require_tree controllers
