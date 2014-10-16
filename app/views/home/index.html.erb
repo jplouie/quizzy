@@ -1,3 +1,9 @@
-<h2>Quizzy Quiz</h2>
+<div ng-app='quizzyApp'>
+  <div ng-controller='quizController'>
+    <h2>Quizzy Quiz</h2>
 
-<p>Your single page app should go here.</p>
+    <div ng-repeat='quiz in quizzes'>
+      <p>{{quiz.title}}<p>
+    </div>
+  </div>
+</div>
