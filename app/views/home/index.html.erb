@@ -1,9 +1,29 @@
 <div ng-app='quizzyApp'>
   <div ng-controller='quizController'>
-    <h2>Quizzy Quiz</h2>
+    <h2 ng-click='startOver'>Quizzy Quiz</h2>
 
-    <div ng-repeat='quiz in quizzes'>
-      <p>{{quiz.title}}<p>
+    <div ng-show='quizList'>
+      <p ng-repeat='quiz in quizzes' ng-click='select(quiz)' class='list'>
+        {{quiz.title}}
+      <p>
+    </div>
+
+    <div ng-show='question'>
+      <p>{{question.question}}</p>
+      <div ng-repeat='choice in question.choices'>
+        <input type='radio' ng-value='choice' ng-model='question.ans'>
+          {{choice}}
+      </div>
+      <button ng-click='next(question.ans)'>Next</button>
+    </div>
+
+    <div ng-show='score'>
+      <p>You got {{correct}}/{{questions.length}} ({{(correct / questions.length * 100).toFixed(0)}}%)</p>
+      <button ng-click='startOver'>Take a new quiz</button>
+    </div>
+
+    <div ng-show='status'>
+      {{display}}
     </div>
   </div>
 </div>
