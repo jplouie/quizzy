@@ -1,22 +1,34 @@
-app.controller('quizController', ['$scope', '$timeout', 'Quiz', 'Question',
-  function($scope, $timeout, Quiz, Question){
+app.controller('quizController',
+  ['$scope', '$timeout', 'Quiz', 'Question', 'Score',
+  function($scope, $timeout, Quiz, Question, Score){
 
   $scope.quizList = true;
   $scope.question = false;
   $scope.status = false;
+  $scope.quizForm = false;
+  $scope.scoreList = false;
   $scope.quizzes = Quiz.query();
 
   $scope.select = function(quiz){
-    $scope.quizList = false;
-    $scope.question = true;
-    $scope.current = 0;
-    $scope.correct = 0;
-    $scope.questions = Question.query({quiz_id: quiz.id}, function(quizQuestions){
-      for(var i = 0; i < quizQuestions.length; i++){
-        quizQuestions[i].choices = quizQuestions[i].choices.split(';');
-      }
-      $scope.question = $scope.questions[$scope.current];
-    });
+    if($scope.quizzes.user){
+      $scope.quizList = false;
+      $scope.question = true;
+      $scope.current = 0;
+      $scope.correct = 0;
+      $scope.questions = Question.query({quiz_id: quiz.id}, function(quizQuestions){
+        for(var i = 0; i < quizQuestions.length; i++){
+          quizQuestions[i].choices = quizQuestions[i].choices.split(';');
+        }
+        $scope.question = $scope.questions[$scope.current];
+      });
+    }
+    else{
+      $scope.status = true;
+      $scope.display = 'You must enter your name!';
+      $timeout(function(){
+        $scope.status = false;
+      }, 1000);
+    }
   };
 
   $scope.next = function(ans){
@@ -44,6 +56,12 @@ app.controller('quizController', ['$scope', '$timeout', 'Quiz', 'Question',
       }
     }
     else{
+      Score.save({
+        quiz_id: $scope.questions[0].quiz_id,
+        score: {
+          score: ($scope.correct/$scope.questions.length*100).toFixed(0),
+          user: null
+        }});
       $scope.display = 'You must select an answer!';
       $timeout(function(){
         $scope.status = false;
@@ -51,7 +69,26 @@ app.controller('quizController', ['$scope', '$timeout', 'Quiz', 'Question',
     }
   };
 
-  $scope.startOver = function(){
+  $scope.viewScores = function(){
+    $scope.quizList = false;
+    $scope.scoreList = true;
+    $scope.scores = Score.query();
+  };
 
+  $scope.createQuiz = function(){
+    $scope.quizList = false;
+    $scope.quizForm = true;
+  };
+
+  $scope.startOver = function(){
+    $scope.quizList = true;
+    $scope.question = false;
+    $scope.score = false;
+    $scope.status = false;
+    $scope.quizForm = false;
+    $scope.scoreList = false;
+    $scope.current = 0;
+    $scope.correct = 0;
+    $scope.user = '';
   };
 }]);

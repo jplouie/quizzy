@@ -1,11 +1,49 @@
 <div ng-app='quizzyApp'>
   <div ng-controller='quizController'>
-    <h2 ng-click='startOver'>Quizzy Quiz</h2>
+    <h2 class='list' ng-click='startOver()'>Quizzy Quiz</h2>
 
     <div ng-show='quizList'>
       <p ng-repeat='quiz in quizzes' ng-click='select(quiz)' class='list'>
         {{quiz.title}}
       <p>
+      <input type='text' ng-model='quizzes.user'><br>
+      <p class='list' ng-click='createQuiz()'>Create quiz</p>
+      <p class='list' ng-click='viewScores()'>View scores</p>
+    </div>
+
+    <div ng-show='quizForm'>
+      <select ng-model='quizzes.formType'>
+        <option value='multi'>Multiple Choice</option>
+        <option value='bool'>True/False</option>
+        <option value='txt'>Free Response</option>
+      </select>
+      <div ng-show='multiple'>
+      </div>
+      <div ng-show='boolean'>
+      </div>
+      <div ng-show='text'>
+      </div>
+    </div>
+
+    <div ng-show-'scoreList'>
+      <table>
+        <thead>
+          <th>
+            <td>
+            </td>
+          </th>
+        </thead>
+        <tbody>
+          <tr>
+            <td>
+            </td>
+            <td>
+            </td>
+            <td>
+            </td>
+          </tr>
+        </tbody>
+      </table>
     </div>
 
     <div ng-show='question'>
@@ -18,7 +56,7 @@
     </div>
 
     <div ng-show='score'>
-      <p>You got {{correct}}/{{questions.length}} ({{(correct / questions.length * 100).toFixed(0)}}%)</p>
+      <p>{{quizzes.user}}, you got {{correct}}/{{questions.length}} ({{(correct / questions.length * 100).toFixed(0)}}%)</p>
       <button ng-click='startOver'>Take a new quiz</button>
     </div>
 
